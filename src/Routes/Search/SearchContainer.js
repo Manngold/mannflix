@@ -6,16 +6,12 @@ export default class extends React.Component {
   state = {
     movieResults: null,
     tvResults: null,
-    searchTerm: "code",
+    searchTerm: "",
     loading: false,
     error: null
   };
 
-  componentDidMount() {
-    this.handleSearch();
-  }
-
-  handleSearch = () => {
+  handleSubmit = () => {
     const { searchTerm } = this.state;
     if (searchTerm !== "") {
       this.searchByTerm();
@@ -48,6 +44,7 @@ export default class extends React.Component {
         searchTerm={searchTerm}
         loading={loading}
         error={error}
+        handleSearch={this.handleSubmit}
       />
     );
   }
