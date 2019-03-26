@@ -7,7 +7,22 @@ export default class extends React.Component {
     loading: true,
     error: null
   };
+
+  async componentDidMount() {
+    const {
+      match: {
+        params: { id }
+      },
+      history: { push }
+    } = this.props;
+    const parsedId = parseInt(id);
+    if (isNaN(parsedId)) {
+      return push("/");
+    }
+  }
+
   render() {
+    console.log(this.props);
     const { result, loading, error } = this.state;
     return <DetailPresenter result={result} loading={loading} error={error} />;
   }
