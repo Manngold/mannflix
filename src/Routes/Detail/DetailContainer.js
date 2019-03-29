@@ -39,12 +39,10 @@ export default class extends React.Component {
       console.log("Not Founded");
     } finally {
       this.setState({ loading: false, result });
-      console.log(result);
     }
   }
 
   render() {
-    console.log(this.props);
     const { result, loading, error } = this.state;
     return <DetailPresenter result={result} loading={loading} error={error} />;
   }
