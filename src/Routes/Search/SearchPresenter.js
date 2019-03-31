@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "../../Component/Loader";
 import Section from "../../Component/Section";
+import Message from "../../Component/Message";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -39,7 +40,7 @@ const SearchPresenter = ({
     {loading ? (
       <Loader />
     ) : (
-      <>
+      <Container>
         {movieResults && movieResults.length > 0 && (
           <Section title="Movie Results">
             {movieResults.map(movie => (
@@ -54,8 +55,12 @@ const SearchPresenter = ({
             ))}
           </Section>
         )}
-      </>
+      </Container>
     )}
+    {movieResults &&
+      movieResults.length === 0 &&
+      tvResults &&
+      tvResults.length === 0 && <Message text="Nothing Founded" />}
   </Container>
 );
 
