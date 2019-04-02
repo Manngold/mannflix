@@ -6,11 +6,35 @@ import styled from "styled-components";
 const Container = styled.div`
   font-size: 12px;
 `;
-const ImageContainer = styled.div`
-  margin-bottom: 5px;
+const Image = styled.div`
+  background-image: url(${props => props.bgUrl});
+  height: 180px;
+  background-size: cover;
+  border-radius: 4px;
+  background-position: center center;
+  transition: opacity 0.2s linear;
 `;
-const Image = styled.div``;
-const Rating = styled.span``;
+const Rating = styled.span`
+  opacity: 0;
+  right: 5px;
+  bottom: 4px;
+  position: absolute;
+  transition: opacity 0.2s linear;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  margin-bottom: 5px;
+  &:hover {
+    ${Image} {
+      opacity: 0.3;
+    }
+    ${Rating} {
+      opacity: 1;
+    }
+  }
+`;
+
 const Title = styled.span`
   display: block;
 `;
@@ -23,7 +47,13 @@ const Poster = ({ id, imageUrl, rating, title, year, isMovie = false }) => (
   <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
     <Container>
       <ImageContainer>
-        <Image bgUrl={imageUrl} />
+        <Image
+          bgUrl={
+            imageUrl
+              ? `https://image.tmdb.org/t/p/w300${imageUrl}`
+              : require("../assets/noPoster.png")
+          }
+        />
         <Rating>
           <span role="img" aria-label="rating">
             ⭐️
@@ -31,7 +61,7 @@ const Poster = ({ id, imageUrl, rating, title, year, isMovie = false }) => (
           {rating}/10
         </Rating>
       </ImageContainer>
-      <Title>{title}</Title>
+      <Title>{title.length > 18 ? `${title.slice(0, 18)}...` : title}</Title>
       <Year>{year}</Year>
     </Container>
   </Link>
