@@ -45,15 +45,25 @@ const Data = styled.div`
   margin-left: 10px;
 `;
 
-const Title = styled.span``;
+const Title = styled.h3`
+  font-size: 32px;
+`;
 
-const ItemContainer = styled.div``;
+const ItemContainer = styled.div`
+  margin: 20px 0px;
+`;
 
 const Item = styled.span``;
 
-const Divider = styled.span``;
+const Divider = styled.span`
+  margin: 0px 15px;
+`;
 
-const Overview = styled.p``;
+const Overview = styled.p`
+  opacity: 0.7;
+  line-height: 1.5;
+  width: 50%;
+`;
 
 const DetailPresenter = ({ result, loading, error }) =>
   loading ? (
@@ -72,8 +82,39 @@ const DetailPresenter = ({ result, loading, error }) =>
           }
         />
         <Data>
-          <Title />
-          <ItemContainer />
+          <Title>
+            {result.original_title
+              ? result.original_title
+              : result.original_name}
+          </Title>
+          <ItemContainer>
+            <Item>
+              {result.release_date
+                ? result.release_date.slice(0, 4)
+                : result.first_air_date.slice(0, 4)}
+            </Item>
+            <Divider>∙</Divider>
+            <Item>
+              {result.runtime
+                ? `${result.runtime} min`
+                : `${result.episode_run_time[0]} min`}
+            </Item>
+            <Divider>∙</Divider>
+            <Item>
+              {result.genres.map(genre =>
+                genre.name != result.genres[result.genres.length - 1].name
+                  ? `${genre.name} / `
+                  : genre.name
+              )}
+            </Item>
+            <Divider>∙</Divider>
+            <Item>
+              {result.vote_average
+                ? `⭐️ : ${result.vote_average}`
+                : `⭐️ : No Rate`}
+            </Item>
+          </ItemContainer>
+          <Overview>{result.overview}</Overview>
         </Data>
       </Content>
     </Container>
